@@ -17,6 +17,7 @@
         cy.get('[placeholder="Password"]').type('Welcome12345')
         cy.contains('button', 'Sign in').click()
     })
+
 //
 //
 // -- This is a child command --
