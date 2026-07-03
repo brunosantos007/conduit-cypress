@@ -1,19 +1,37 @@
 /// <reference types="cypress" />
 
-beforeEach(() => {
-    cy.loginToApplication()
-    cy.wait(1000)
-    cy.get('.preview-link').first().click()
+it('Get Comments', () => {
+    cy.request({
+        url: 'https://conduit-api.bondaracademy.com/api/users/login',
+        method: 'POST',
+        body: {
+            "user": {
+                "email": "MasterPiece@qqq.com",
+                "password": "Welcome12345"
+            }
+        }
+    }).then(response => {
+        expect(response.status).to.equal(200)
+        const accessToken = 'Token ' + response.body.user.token
+
+        cy.request({
+            url: 'https://conduit-api.bondaracademy.com/api/articles/Discover-Bondar-Academy:-Your-Gateway-to-Efficient-Learning-1/comments',
+            method: 'GET',
+            headers: {'Authorization': accessToken}
+        }).then( response => {
+            const idComment = response.body.comments[0].id
+            if (idComment.length == true) {
+                cy.request({
+                    url: 'https://conduit-api.bondaracademy.com/api/articles/Discover-Bondar-Academy:-Your-Gateway-to-Efficient-Learning-1/comments',
+                    method: 'DELETE',
+                    headers: {'Authorization': accessToken}
+                }).then
+            } else {
+                
+            }
+            
+        })
+    })
+
     
-})
-
-it('Teste de GET - pegar ID', () => {
-    cy.wait(5000)
-    cy.request("GET", 
-"https://conduit-api.bondaracademy.com/api/articles/Discover-Bondar-Academy:-Your-Gateway-to-Efficient-Learning-1/comments")
-  .then((res) => {
-      cy.log(JSON.stringify(res.body, null, 2))
-  })
-
-
-})
+});
