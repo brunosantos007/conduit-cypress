@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-it('Get Comments', () => {
+it('Post Comments', () => {
     cy.request({
         url: 'https://conduit-api.bondaracademy.com/api/users/login',
         method: 'POST',
@@ -19,19 +19,44 @@ it('Get Comments', () => {
             method: 'GET',
             headers: {'Authorization': accessToken}
         }).then( response => {
-            const idComment = response.body.comments[0].id
-            if (idComment.length == true) {
+            const comments = response.body.comments
+            if (comments.length >= 1) {
+                const idComment = comments[0].id
+
                 cy.request({
-                    url: 'https://conduit-api.bondaracademy.com/api/articles/Discover-Bondar-Academy:-Your-Gateway-to-Efficient-Learning-1/comments',
+                    url: `https://conduit-api.bondaracademy.com/api/articles/Discover-Bondar-Academy:-Your-Gateway-to-Efficient-Learning-1/comments/${idComment}`,
                     method: 'DELETE',
                     headers: {'Authorization': accessToken}
-                }).then
+                }).then( response => {
+                    expect(response.status).to.equal(200)
+                })
+                 cy.request({
+                     url: `https://conduit-api.bondaracademy.com/api/articles/Discover-Bondar-Academy:-Your-Gateway-to-Efficient-Learning-1/comments`,
+                     method: 'POST',
+                     headers: {'Authorization': accessToken},
+                     body: {
+                         "comment": {
+                             "body": "TesteIF"
+                         }
+                     }
+                 }).then( response => {
+                     expect(response.status).to.equal(200)
+                 })
             } else {
-                
+                 cy.request({
+                     url: `https://conduit-api.bondaracademy.com/api/articles/Discover-Bondar-Academy:-Your-Gateway-to-Efficient-Learning-1/comments`,
+                     method: 'POST',
+                     headers: {'Authorization': accessToken},
+                     body: {
+                         "comment": {
+                             "body": "TesteELSE"
+                         }
+                     }
+                 }).then( response => {
+                     expect(response.status).to.equal(200)
+                 })
             }
             
         })
     })
-
-    
 });
