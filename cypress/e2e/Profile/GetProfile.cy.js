@@ -1,7 +1,17 @@
 /// <reference types="cypress" />
 
-it('Get Profile', () => {
-    cy.intercept('GET', '**/profiles/bnm', { fixture: 'GetProfiles.json' }).as('getProfile')
-    cy.loginToApplication()
-    cy.get('a[href="/profile/bnm"]').should('contain', 'bnm').click()
-});
+it('Get Profile', function () {
+    cy.loginToApplicationHeadless()
+
+    cy.get('@accessToken').then(token => {
+        cy.request({
+            url: 'https://conduit.bondaracademy.com/profile/bnm',
+            method: 'GET',
+            headers: { Authorization: token }
+        }).then(response => {
+            expect(response.status).to.equal(200)
+        })
+    })
+})
+
+
