@@ -1,11 +1,12 @@
 /// <reference types="cypress" />
+import { apiRoute } from "../../support/apiRoutes"
 
 it('Get Articles Author', function () {
     cy.loginToApplicationHeadless()
 
     cy.get('@accessToken').then(token => {
         cy.request({
-            url: 'https://conduit-api.bondaracademy.com/api/articles?author=MasterPiece&limit=10&offset=0',
+            url: apiRoute.getArticlesAuthor,
             method: 'GET',
             headers: { Authorization: token }
         }).then(response => {

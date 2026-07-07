@@ -1,11 +1,13 @@
 /// <reference types="cypress" />
 
+import { apiRoute } from "../../support/apiRoutes";
+
 it('Put Profile', function () {
     cy.loginToApplicationHeadless()
 
     cy.get('@accessToken').then(token => {
         cy.request({
-            url: 'https://conduit-api.bondaracademy.com/api/user',
+            url: apiRoute.putProfile,
             method: 'PUT',
             body: {
                 user: {

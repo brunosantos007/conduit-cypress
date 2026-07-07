@@ -1,11 +1,13 @@
 /// <reference types="cypress" />
 
+import { apiRoute } from "../../support/apiRoutes"
+
 it('Get Tags', function () {
     cy.loginToApplicationHeadless()
 
     cy.get('@accessToken').then(token => {
         cy.request({
-            url: 'https://conduit-api.bondaracademy.com/api/tags',
+            url: apiRoute.getTags,
             method: 'GET',
             headers: { Authorization: token }
         }).then(response => {

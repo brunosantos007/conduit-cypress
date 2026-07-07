@@ -1,10 +1,11 @@
 /// <reference types="cypress" />
+import { apiRoute } from "../../support/apiRoutes"
 
 it('Post Comments', function () {
     cy.loginToApplicationHeadless()
     cy.get('@accessToken').then(token => {
         cy.request({
-            url: 'https://conduit-api.bondaracademy.com/api/articles/Discover-Bondar-Academy:-Your-Gateway-to-Efficient-Learning-1/comments',
+            url: apiRoute.getComments,
             method: 'GET',
             headers: { Authorization: token }
         }).then(response => {
@@ -14,14 +15,14 @@ it('Post Comments', function () {
             if (comments.length >= 1) {
                 const idComment = comments[0].id
                 cy.request({
-                    url: `https://conduit-api.bondaracademy.com/api/articles/Discover-Bondar-Academy:-Your-Gateway-to-Efficient-Learning-1/comments/${idComment}`,
+                    url: `${apiRoute.getComments}/${idComment}`,
                     method: 'DELETE',
                     headers: { Authorization: token }
                 }).then(response => {
                     expect(response.status).to.equal(200)
                 })
                 cy.request({
-                    url: `https://conduit-api.bondaracademy.com/api/articles/Discover-Bondar-Academy:-Your-Gateway-to-Efficient-Learning-1/comments`,
+                    url: apiRoute.getComments,
                     method: 'POST',
                     headers: { Authorization: token },
                     body: {
@@ -34,7 +35,7 @@ it('Post Comments', function () {
                 })
             } else {
                 cy.request({
-                    url: `https://conduit-api.bondaracademy.com/api/articles/Discover-Bondar-Academy:-Your-Gateway-to-Efficient-Learning-1/comments`,
+                    url: apiRoute.getComments,
                     method: 'POST',
                     headers: { Authorization: token },
                     body: {

@@ -1,10 +1,11 @@
 /// <reference types="cypress" />
+import { apiRoute } from "../../support/apiRoutes"
 
 it('Delete Comments', function () {
     cy.loginToApplicationHeadless()
     cy.get('@accessToken').then(token => {
         cy.request({
-            url: 'https://conduit-api.bondaracademy.com/api/articles/Discover-Bondar-Academy:-Your-Gateway-to-Efficient-Learning-1/comments',
+            url: apiRoute.getComments,
             method: 'GET',
             headers: { Authorization: token }
         }).then(response => {
@@ -13,7 +14,7 @@ it('Delete Comments', function () {
             if (comments.length >= 1) {
                 const idComment = comments[0].id
                 cy.request({
-                    url: `https://conduit-api.bondaracademy.com/api/articles/Discover-Bondar-Academy:-Your-Gateway-to-Efficient-Learning-1/comments/${idComment}`,
+                    url: `${apiRoute.getComments}/${idComment}`,
                     method: 'DELETE',
                     headers: { Authorization: token }
                 }).then(response => {
@@ -22,7 +23,7 @@ it('Delete Comments', function () {
 
             } else {
                 cy.request({
-                    url: `https://conduit-api.bondaracademy.com/api/articles/Discover-Bondar-Academy:-Your-Gateway-to-Efficient-Learning-1/comments`,
+                    url: apiRoute.getComments,
                     method: 'POST',
                     headers: { Authorization: token },
                     body: {
@@ -34,7 +35,7 @@ it('Delete Comments', function () {
                     expect(response.status).to.equal(200)
                     const createdId = response.body.comment.id
                     cy.request({
-                        url: `https://conduit-api.bondaracademy.com/api/articles/Discover-Bondar-Academy:-Your-Gateway-to-Efficient-Learning-1/comments/${createdId}`,
+                        url: `${apiRoute.getComments}/${createdId}`,
                         method: 'DELETE',
                         headers: { Authorization: token }
                     }).then(response => {

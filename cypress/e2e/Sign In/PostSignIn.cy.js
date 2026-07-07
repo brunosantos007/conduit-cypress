@@ -1,8 +1,10 @@
 /// <reference types="cypress" />
 
+import { apiRoute } from "../../support/apiRoutes"
+
 it('Post Sign In', () => {
     cy.request({
-            url: 'https://conduit-api.bondaracademy.com/api/users/login',
+            url: apiRoute.postSignIn,
             method: 'POST',
             body: {
                 user: {

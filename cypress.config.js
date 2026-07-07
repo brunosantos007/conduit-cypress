@@ -5,7 +5,7 @@ module.exports = defineConfig({
   allowCypressEnv: true,
 
   e2e: {
-    baseUrl: "https://conduit.bondaracademy.com",
+    baseUrl: "https://conduit-api.bondaracademy.com",
     experimentalRunAllSpecs: true,
 
     setupNodeEvents(on, config) {

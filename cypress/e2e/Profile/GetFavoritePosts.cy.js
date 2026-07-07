@@ -1,11 +1,12 @@
 /// <reference types="cypress" />
+import { apiRoute } from "../../support/apiRoutes"
 
-it('Get Profile', function () {
+it('Get Favorite Posts', function () {
     cy.loginToApplicationHeadless()
 
     cy.get('@accessToken').then(token => {
         cy.request({
-            url: 'https://conduit-api.bondaracademy.com/api/articles?favorited=MasterPiece&limit=10&offset=0',
+            url: apiRoute.getFavoritePosts,
             method: 'GET',
             headers: { Authorization: token }
         }).then(response => {

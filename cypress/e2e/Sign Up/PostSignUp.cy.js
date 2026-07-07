@@ -1,12 +1,13 @@
 /// <reference types="cypress" />
 import { faker } from '@faker-js/faker';
+import { apiRoute } from '../../support/apiRoutes';
 
 it('Post Sign Up', () => {
     const fakeEmail = faker.internet.email()
     const fakePassword = faker.internet.password()
     const fakeUserName = faker.internet.username()
     cy.request({
-            url: 'https://conduit-api.bondaracademy.com/api/users',
+            url: apiRoute.postSignUp,
             method: 'POST',
             body: {
                 "user": {

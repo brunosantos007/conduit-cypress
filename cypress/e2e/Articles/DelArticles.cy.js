@@ -1,10 +1,11 @@
 /// <reference types="cypress" />
+import { apiRoute } from "../../support/apiRoutes"
 
 it('Delete Articles', function () {
     cy.loginToApplicationHeadless()
     cy.get('@accessToken').then(token => {
         cy.request({
-            url: 'https://conduit-api.bondaracademy.com/api/articles?author=bnm&limit=10&offset=0',
+            url: apiRoute.getArticles,
             method: 'GET',
             headers: { Authorization: token }
         }).then(response => {
@@ -13,7 +14,7 @@ it('Delete Articles', function () {
             if (articles.length >= 1) {
                 const idComment = articles[0]
                 cy.request({
-                    url: `https://conduit-api.bondaracademy.com/api/articles/API-Automation-56855`,
+                    url: apiRoute.deleteArticle,
                     method: 'DELETE',
                     headers: { Authorization: token }
                 }).then(response => {
@@ -22,7 +23,7 @@ it('Delete Articles', function () {
 
             } else {
                 cy.request({
-                    url: `https://conduit-api.bondaracademy.com/api/articles/`,
+                    url: apiRoute.postCreateArticles,
                     method: 'POST',
                     headers: { Authorization: token },
                     body: {
@@ -38,7 +39,7 @@ it('Delete Articles', function () {
                 }).then(response => {
                     expect(response.status).to.equal(201)
                     cy.request({
-                        url: `https://conduit-api.bondaracademy.com/api/articles/API-Automation-56855`,
+                        url: apiRoute.deleteArticle,
                         method: 'DELETE',
                         headers: { Authorization: token }
                     }).then(response => {
