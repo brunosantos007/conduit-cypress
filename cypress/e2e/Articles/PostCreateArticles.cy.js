@@ -9,24 +9,32 @@ describe('Create Articles', () => {
         })
     })
 
-    it.only('Create Articles - title cannot be blank', () => {
+    it('Create Articles - title cannot be blank', () => {
         cy.loginToApplicationHeadless()
         cy.get('@accessToken').then(token => {
-            cy.request({
-                url: apiRoute.createArticle,
-                method: 'POST',
-                headers: { Authorization: token },
-                failOnStatusCode: false,
-                body: {
-                    article: {
-                        title: "",
-                        description: "",
-                        body: "",
-                        tagList: [""]
-                    }
-                }
-            }).then(response => {
+            cy.blankTitleArticles(token).then(response => {
                 expect(response.status).to.equal(422)
+                expect(response.body.errors.title[0]).to.equal("can't be blank")
+            })
+        })
+    });
+
+    it('Create Articles - description cannot be blank', () => {
+        cy.loginToApplicationHeadless()
+        cy.get('@accessToken').then(token => {
+            cy.blankDescriptionArticles(token).then(response => {
+                expect(response.status).to.equal(422)
+                expect(response.body.errors.description[0]).to.equal("can't be blank")
+            })
+        })
+    });
+
+    it('Create Articles - body cannot be blank', () => {
+        cy.loginToApplicationHeadless()
+        cy.get('@accessToken').then(token => {
+            cy.blankBodyArticles(token).then(response => {
+                expect(response.status).to.equal(422)
+                expect(response.body.errors.body[0]).to.equal("can't be blank")
             })
         })
     });

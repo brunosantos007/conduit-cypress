@@ -6,6 +6,7 @@ it('Delete Unfollow Profile', function () {
     cy.get('@accessToken').then(token => {
         cy.delUnfollowProfile(token).then(response => {
             expect(response.status).to.equal(200)
+            expect(response.body.profile.following).to.equal(false)
         })
     })
 })

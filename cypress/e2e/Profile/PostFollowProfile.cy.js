@@ -7,6 +7,7 @@ it('Post Follow Profile', function () {
     cy.get('@accessToken').then(token => {
         cy.postFollowProfile(token).then(response => {
             expect(response.status).to.equal(200)
+            expect(response.body.profile.following).to.equal(true)
         })
     })
 })

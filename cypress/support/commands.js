@@ -172,6 +172,56 @@ Cypress.Commands.add('postFavoriteArticles', (token) => {
     })
 })
 
+Cypress.Commands.add('blankTitleArticles', (token) => {
+    cy.request({
+                url: apiRoute.createArticle,
+                method: 'POST',
+                headers: { Authorization: token },
+                failOnStatusCode: false,
+                body: {
+                    article: {
+                        title: "",
+                        description: "",
+                        body: "",
+                        tagList: [""]
+                    }
+                }
+            })
+})
+
+Cypress.Commands.add('blankDescriptionArticles', (token) => {
+    cy.request({
+                url: apiRoute.createArticle,
+                method: 'POST',
+                headers: { Authorization: token },
+                failOnStatusCode: false,
+                body: {
+                    article: {
+                        title: "API Automation",
+                        description: "",
+                        body: "The Api should be automated every single time? Well, we will discover reading this article here",
+                        tagList: ["@api @call @automation"]
+                    }
+                }
+            })
+})
+
+Cypress.Commands.add('blankBodyArticles', (token) => {
+    cy.request({
+                url: apiRoute.createArticle,
+                method: 'POST',
+                headers: { Authorization: token },
+                failOnStatusCode: false,
+                body: {
+                    article: {
+                        title: "API Automation",
+                        description: "API",
+                        body: "",
+                        tagList: ["@api @call @automation"]
+                    }
+                }
+            })
+})
 
 // Comments
 

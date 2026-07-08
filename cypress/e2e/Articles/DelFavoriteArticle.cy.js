@@ -7,6 +7,7 @@ it('Delete Favorite Articles', function () {
     cy.get('@accessToken').then(token => {
         cy.delFavoriteArticles(token).then(response => {
             expect(response.status).to.equal(200)
+            expect(response.body.article.favorited).to.equal(false)
         })
     })
 })
