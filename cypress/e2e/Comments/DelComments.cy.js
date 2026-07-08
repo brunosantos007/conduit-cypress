@@ -4,45 +4,6 @@ import { apiRoute } from "../../support/apiRoutes"
 it('Delete Comments', function () {
     cy.loginToApplicationHeadless()
     cy.get('@accessToken').then(token => {
-        cy.request({
-            url: apiRoute.getComments,
-            method: 'GET',
-            headers: { Authorization: token }
-        }).then(response => {
-            expect(response.status).to.equal(200)
-            const comments = response.body.comments
-            if (comments.length >= 1) {
-                const idComment = comments[0].id
-                cy.request({
-                    url: `${apiRoute.getComments}/${idComment}`,
-                    method: 'DELETE',
-                    headers: { Authorization: token }
-                }).then(response => {
-                    expect(response.status).to.equal(200)
-                })
-
-            } else {
-                cy.request({
-                    url: apiRoute.getComments,
-                    method: 'POST',
-                    headers: { Authorization: token },
-                    body: {
-                        comment: {
-                            body: "TesteELSE"
-                        }
-                    }
-                }).then(response => {
-                    expect(response.status).to.equal(200)
-                    const createdId = response.body.comment.id
-                    cy.request({
-                        url: `${apiRoute.getComments}/${createdId}`,
-                        method: 'DELETE',
-                        headers: { Authorization: token }
-                    }).then(response => {
-                        expect(response.status).to.equal(200)
-                    })
-                })
-            }
-        })
+        cy.delComments(token)
     })
 })

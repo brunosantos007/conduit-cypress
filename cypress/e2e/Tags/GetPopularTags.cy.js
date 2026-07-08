@@ -4,16 +4,9 @@ import { apiRoute } from "../../support/apiRoutes"
 
 it('Get Tags', function () {
     cy.loginToApplicationHeadless()
-
     cy.get('@accessToken').then(token => {
-        cy.request({
-            url: apiRoute.getPopularTags,
-            method: 'GET',
-            headers: { Authorization: token }
-        }).then(response => {
+        cy.getPopularTags(token).then(response => {
             expect(response.status).to.equal(200)
         })
     })
 })
-
-

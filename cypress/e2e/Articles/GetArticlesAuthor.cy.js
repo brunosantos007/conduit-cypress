@@ -3,16 +3,9 @@ import { apiRoute } from "../../support/apiRoutes"
 
 it('Get Articles Author', function () {
     cy.loginToApplicationHeadless()
-
     cy.get('@accessToken').then(token => {
-        cy.request({
-            url: apiRoute.getArticlesAuthor,
-            method: 'GET',
-            headers: { Authorization: token }
-        }).then(response => {
+        cy.getArticlesAuthor(token).then(response => {
             expect(response.status).to.equal(200)
         })
     })
 })
-
-
