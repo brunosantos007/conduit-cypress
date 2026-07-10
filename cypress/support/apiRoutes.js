@@ -12,6 +12,7 @@ export const apiRoute = {
     //Profile
     getFollowUnfollowProfile: '/api/profiles/Artem%20Bondar/follow',
     getFavoritePosts: '/api/articles?favorited=bnm&limit=10&offset=0',
+    delPostFavoritePosts: '/api/articles/Discover-Bondar-Academy:-Your-Gateway-to-Efficient-Learning-1/favorite',
     getProfile: '/api/profiles/bnm',
     putProfile: '/api/user',
     //Sign In

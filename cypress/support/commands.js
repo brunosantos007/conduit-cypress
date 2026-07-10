@@ -358,6 +358,22 @@ Cypress.Commands.add('getProfile', (token) => {
         })
 })
 
+Cypress.Commands.add('deleteFavoritePosts', (token) => {
+    cy.request({
+            url: apiRoute.delPostFavoritePosts,
+            method: 'DELETE',
+            headers: { Authorization: token }
+        })
+})
+
+Cypress.Commands.add('postFavoritePosts', (token) => {
+    cy.request({
+            url: apiRoute.delPostFavoritePosts,
+            method: 'POST',
+            headers: { Authorization: token }
+        })
+})
+
 Cypress.Commands.add('postFollowProfile', (token) => {
     cy.request({
             url: apiRoute.getFollowUnfollowProfile,
@@ -385,6 +401,8 @@ Cypress.Commands.add('putProfile', (token) => {
         })
 })
 
+// Sign In
+
 Cypress.Commands.add('postSignIn', () => {
     cy.request({
             url: apiRoute.postSignIn,
@@ -397,6 +415,8 @@ Cypress.Commands.add('postSignIn', () => {
             }
         })
 })
+
+// Sign Up
 
 Cypress.Commands.add('postSignUp', () => {
     const fakeEmail = faker.internet.email()
